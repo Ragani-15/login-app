@@ -9,7 +9,7 @@ import org.tensorflow.lite.support.common.FileUtil
 class FaceNet(context: Context) {
 
     private val interpreter: Interpreter
-    private val inputSize = 150
+    private val inputSize = 160
 
     init {
         val model = FileUtil.loadMappedFile(context, "facenet.tflite")
@@ -23,9 +23,9 @@ class FaceNet(context: Context) {
         for (x in 0 until inputSize) {
             for (y in 0 until inputSize) {
                 val px = resized.getPixel(x, y)
-                input[0][y][x][0] = ((px shr 16 and 0xFF) + 128) / 128f
-                input[0][y][x][1] = ((px shr 8 and 0xFF) +128) / 128f
-                input[0][y][x][2] = ((px and 0xFF) * 128) / 128f
+                input[0][y][x][0] = ((px shr 16 and 0xFF) - 128) / 128f
+                input[0][y][x][1] = ((px shr 8 and 0xFF) -128) / 128f
+                input[0][y][x][2] = ((px and 0xFF) - 128) / 128f
             }
         }
 
