@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var faceNet: FaceNet
+    private lateinit var Face: FaceNet
     private var capturedBitmap: Bitmap? = null
     private lateinit var previewView: PreviewView
     private lateinit var imageCapture: ImageCapture
@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        faceNet = FaceNet(this)
+        Face = FaceNet(this)
 
         previewView = findViewById(R.id.previewView)
         val etName = findViewById<EditText>(R.id.etName)
@@ -81,7 +81,7 @@ class MainActivity : AppCompatActivity() {
                             toast("No face detected")
                             return@detectFace
                         }
-                        val embedding = faceNet.getEmbedding(capturedBitmap!!)
+                        val embedding = Face.getEmbedding(capturedBitmap!!)
                         val embString = FaceUtils.embeddingToString(embedding)
                         lifecycleScope.launch {
                             AppDatabase.getDatabase(this@MainActivity)
