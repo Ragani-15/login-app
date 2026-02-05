@@ -17,7 +17,7 @@ import kotlinx.coroutines.launch
 class MainActivity : AppCompatActivity() {
 
     private lateinit var Face: FaceNet
-    private var capturedBitmap: Bitmap? = null
+    private var takeBitmap: Bitmap? = null
     private lateinit var previewView: PreviewView
     private lateinit var imageCapture: ImageCapture
 
@@ -74,14 +74,14 @@ class MainActivity : AppCompatActivity() {
             ContextCompat.getMainExecutor(this),
             object : ImageCapture.OnImageCapturedCallback() {
                 override fun onCaptureSuccess(image: ImageProxy) {
-                    capturedBitmap = imageProxyToBitmap(image)
+                    takeBitmap = imageProxyToBitmap(image)
                     image.close()
-                    FaceDetectorHelper.detectFace(capturedBitmap!!) { hasFace ->
+                    FaceDetectorHelper.detectFace(takeBitmap!!) { hasFace ->
                         if (!hasFace) {
                             toast("No face detected")
                             return@detectFace
                         }
-                        val embedding = Face.getEmbedding(capturedBitmap!!)
+                        val embedding = Face.getEmbedding(takeBitmap!!)
                         val embString = FaceUtils.embeddingToString(embedding)
                         lifecycleScope.launch {
                             AppDatabase.getDatabase(this@MainActivity)
