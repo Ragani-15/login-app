@@ -9,7 +9,7 @@ import org.tensorflow.lite.support.common.FileUtil
 class FaceNet(context: Context) {
 
     private val interpreter: Interpreter
-    private val inputSize = 160
+    private val inputSize = 150
 
     init {
         val model = FileUtil.loadMappedFile(context, "facenet.tflite")
@@ -29,7 +29,7 @@ class FaceNet(context: Context) {
             }
         }
 
-        val output = Array(1) { FloatArray(128) }
+        val output = Array(1) { FloatArray(512) }
         interpreter.run(input, output)
         return output[0]
     }
